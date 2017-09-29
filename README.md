@@ -74,7 +74,7 @@ oc new-app test/smiletomcat --name=tomcatsmile
 ```
 
 
-##References : 
+## References
 <https://github.com/debianmaster/Notes/wiki/How-to-push-docker-images-to-openshift-internal-registry-and-create-application-from-it.>
 <https://docs.openshift.org/latest/minishift/openshift/openshift-docker-registry.html>
 <https://docs.openshift.com/container-platform/3.3/install_config/registry/accessing_registry.html>
