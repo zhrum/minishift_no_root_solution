@@ -1,4 +1,7 @@
 # minishift_no_root_solution
+This file explains how to run a docker container built from a dockerfile into minishift...
+* Without pushing the image to the official docker hub (everyone has his secrets!!)
+* Without running the docker as root (as openshift prefers)
 
 Login to minishift
 ```
@@ -33,6 +36,10 @@ Grab the cluster ip address provided for openshift internal registry
 ```
 oc get svc -n default | grep registry #172.30.1.1
 ```
+Login as user "coucou"
+```
+oc login -u coucou
+```
 
 Login to internal docker reg
 ```
@@ -52,9 +59,9 @@ vim smiletomcat/Dockerfile
 
 FROM tomcat:8.0
 RUN set -xe; \
-    useradd -r -u 1001 -g 0 openshiftroot;
+    useradd -r -u 1001 -g 0 openshiftuser;
 RUN set -xe; \
-    chown -R openshiftroot /usr/local; \
+    chown -R openshiftuser /usr/local; \
     chgrp -R 0  /usr/local; \
     chmod -R g+rwX  /usr/local;
 USER 1001
