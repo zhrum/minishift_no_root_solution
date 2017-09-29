@@ -1,6 +1,6 @@
 # minishift_no_root_solution
 
-login to minishift
+Login to minishift
 ```
 oc login $(minishift ip):8443
 ```
@@ -10,7 +10,7 @@ Create a new project to test
 oc new-project test
 ```
 
-login to projet
+Login to projet
 ```
 oc login -u system:admin -n test
 ```
@@ -34,7 +34,7 @@ Grab the cluster ip address provided for openshift internal registry
 oc get svc -n default | grep registry #172.30.1.1
 ```
 
-login to internal docker reg
+Login to internal docker reg
 ```
 docker login -p $(oc whoami -t) $(minishift openshift registry)
 ```
@@ -60,7 +60,7 @@ RUN set -xe; \
 USER 1001
 ```
 
-build docker image
+Build docker image from dockerfile
 ```
 docker build smiletomcat --tag $(oc get svc -n default | grep registry):5000/test/smiletomcat
 ```
