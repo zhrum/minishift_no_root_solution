@@ -1,48 +1,48 @@
 # minishift_no_root_solution
 
-### login to minishift
+login to minishift
 ```
 oc login $(minishift ip):8443
 ```
 
-###Create a new project to test
+Create a new project to test
 ```
 oc new-project test
 ```
 
-#login to projet
+login to projet
 ```
 oc login -u system:admin -n test
 ```
 
-#Grab the cluster ip address provided for openshift internal registry
-#The user must have the system:registry role. To add this role:
+Grab the cluster ip address provided for openshift internal registry
+The user must have the system:registry role. To add this role:
 ```
-oc adm policy add-role-to-user system:registry admin
+oc adm policy add-role-to-user system:registry coucou
 ```
-#Have the admin role for the project associated with the Docker operation. For example, if accessing images in the global openshift project:
+Have the admin role for the project associated with the Docker operation. For example, if accessing images in the global openshift project:
 ```
-oc adm policy add-role-to-user admin admin -n test
+oc adm policy add-role-to-user admin coucou -n test
 ```
 
-#For writing or pushing images, for example when using the docker push command, the user must have the system:image-builder role. To add this role:
+For writing or pushing images, for example when using the docker push command, the user must have the system:image-builder role. To add this role:
 ```
-oc adm policy add-role-to-user system:image-builder admin
+oc adm policy add-role-to-user system:image-builder coucou
 ```
-#Grab the cluster ip address provided for openshift internal registry
+Grab the cluster ip address provided for openshift internal registry
 ```
 oc get svc -n default | grep registry #172.30.1.1
 ```
 
-#login to internal docker reg
+login to internal docker reg
 ```
 docker login -p $(oc whoami -t) $(minishift openshift registry)
 ```
-#I don't konw why but this is necessary
+I don't konw why but this is necessary
 ```
 eval $(minishift docker-env)
 ```
-#Create the docker file
+Create the docker file
 
 ```
 mkdir smiletomcat
@@ -60,15 +60,15 @@ RUN set -xe; \
 USER 1001
 ```
 
-#build docker image
+build docker image
 ```
-docker build smiletomcat --tag 172.30.1.1:5000/test/smiletomcat
+docker build smiletomcat --tag $(oc get svc -n default | grep registry):5000/test/smiletomcat
 ```
-#Push image to internal registry
+Push image to internal registry
 ```
-docker push 172.30.1.1:5000/test/smiletomcat
+docker push $(oc get svc -n default | grep registry):5000/test/smiletomcat
 ```
-#Create a new app 'myapp' using the pushed image
+Create a new app 'myapp' using the pushed image
 ```
 oc new-app test/smiletomcat --name=tomcatsmile
 ```
