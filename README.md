@@ -1,4 +1,4 @@
-# minishift_no_root_solution
+# Minishift_NO_ROOT_solution
 This file explains how to run a docker container built from a dockerfile into minishift...
 * Without pushing the image to the official docker hub (everyone has his secrets!!)
 * Without running the docker as root (as openshift prefers)
