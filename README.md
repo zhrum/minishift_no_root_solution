@@ -40,14 +40,13 @@ Login as user "coucou"
 ```
 oc login -u coucou
 ```
-
-Login to internal docker reg
-```
-docker login -p $(oc whoami -t) $(minishift openshift registry)
-```
 I don't konw why but this is necessary
 ```
 eval $(minishift docker-env)
+```
+Login to internal docker reg
+```
+docker login -p $(oc whoami -t) $(minishift openshift registry)
 ```
 Create the docker file
 
